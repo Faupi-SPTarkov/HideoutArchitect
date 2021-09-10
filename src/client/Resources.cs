@@ -40,9 +40,7 @@ namespace HideoutArchitect
             //Set custom sprite
             if(result.iconImage != null)
             {
-                //result.iconImage.sprite = typeof(QuestItemViewPanel).GetField("_foundInRaidSprite", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(original) as Sprite; //TODO: Replace with custom icon
                 result.iconImage.sprite = iconCache["neededforhideout"] ?? UnityEngine.Resources.Load<Sprite>("characteristics/icons/icon_info_faction");
-                //result.iconImage.color = new Color(0, 0, 1);
             }
 
             GameObject.DestroyImmediate(clone);

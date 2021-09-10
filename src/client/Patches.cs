@@ -102,7 +102,7 @@ namespace HideoutArchitect.Patches
                 HideoutItemViewPanel hideoutItemViewPanel;
                 if (!hideoutPanels.TryGetValue(__instance, out hideoutItemViewPanel))
                     return;
-                hideoutItemViewPanel.iconImage.gameObject.SetActive(Utils.IsNeededForHideoutUpgrades(__instance.Item));
+                hideoutItemViewPanel.iconImage.gameObject.SetActive(HideoutArchitect.IsNeededForHideoutUpgrades(__instance.Item));
 
                 __instance.SetHideoutItemViewPanel();
             }

@@ -53,15 +53,15 @@ namespace HideoutArchitect
 
 			UpdateTooltip();
 
-			if (Utils.IsNeededForHideoutUpgrades(item))
+			if (HideoutArchitect.IsNeededForHideoutUpgrades(item))
 				base.ShowGameObject(false);
 		}
 
 		public void UpdateTooltip()
         {
-			List<string> parts = new List<string>() { $"<color=#56C427><b>{"NEEDED FOR HIDEOUT".Localized().ToSentenceCase()}:</b></color>" };
+			List<string> parts = new List<string>() { $"<color={HideoutArchitect.ModConfig.TooltipHeaderColor}><b>{"NEEDED FOR HIDEOUT".Localized().ToSentenceCase()}:</b></color>" };
 
-			List<AreaData> areasToUpgrade = Utils.GetApplicableUpgrades(this.itemView.Item);
+			List<AreaData> areasToUpgrade = HideoutArchitect.GetApplicableUpgrades(this.itemView.Item);
 			if (areasToUpgrade == null || areasToUpgrade.Count < 1) return;
 
 			areasToUpgrade.ForEach(a =>
