@@ -55,5 +55,15 @@ namespace HideoutArchitect
 
             return result;
         }
+
+        public static bool IsValidHexColor(this string inputColor)
+        {
+            //Taken from https://stackoverflow.com/a/13035186
+            if (Regex.Match(inputColor, "^#(?:[0-9a-fA-F]{3}){1,2}$").Success)
+                return true;
+
+            var result = System.Drawing.Color.FromName(inputColor);
+            return result.IsKnownColor;
+        }
     }
 }
