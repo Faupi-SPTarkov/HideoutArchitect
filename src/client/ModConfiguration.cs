@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,10 +21,10 @@ namespace HideoutArchitect
     {
         private string _tooltipHeaderColor = "#56C427";
 
-        [JsonConverter(typeof(Utils.StringEnumCommentConverter), "\nNeededForHideoutDefinition - Defines the logic used to determine which items are marked. See mod page for details. \nOptions: \n\tNextLevel: Generally marks items required for the facility's next upgrade\n\tNextLevelReady: Marks items required for the facility's next upgrade only when its other facility pre-requisites are fulfilled. (e.g. Items for Lavatory 2 won't be marked until Water Collector 1 is finished.)")]
-        public ENeededDefinition NeededForHideoutDefinition = ENeededDefinition.NextLevelReady;
+        [JsonConverter(typeof(Utils.StringEnumCommentConverter), "\n\tNeededForHideoutDefinition - Defines the logic used to determine which items are marked. See mod page for details. \n\tOptions: \n\t\tNextLevel: Generally marks items required for the facility's next upgrade\n\t\tNextLevelReady: Marks items required for the facility's next upgrade only when its other facility pre-requisites are fulfilled. (e.g. Items for Lavatory 2 won't be marked until Water Collector 1 is finished.)")]
+        public ENeededDefinition NeededForHideoutDefinition = ENeededDefinition.NextLevel;
 
-        [JsonConverter(typeof(Utils.JsonCommentConverter), "\nTooltipHeaderColor - Color of the tooltip 'Needed for hideout' header.")]
+        [JsonConverter(typeof(Utils.JsonCommentConverter), "\n\tTooltipHeaderColor - Color of the tooltip 'Needed for hideout' header.")]
         public string TooltipHeaderColor
         {
             get => _tooltipHeaderColor;
