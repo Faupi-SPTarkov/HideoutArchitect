@@ -1,6 +1,9 @@
 ﻿using Comfort.Common;
 using EFT.Hideout;
 using EFT.InventoryLogic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,29 +16,6 @@ namespace HideoutArchitect
 {
     public static class Utils
     {
-        public static List<AreaData> GetApplicableUpgrades(Item item)
-        {
-            List<AreaData> areas = Singleton<GClass1282>.Instance.AreaDatas.Where(area =>
-            {
-                return area.Status != EAreaStatus.NotSet 
-                    && area.Template.Enabled == true // "Place of fame" for example
-                    && (area.NextStage.Requirements.Value as List<GClass1309>).Any(genericRequirement =>
-                {
-                    ItemRequirement itemRequirement = genericRequirement as ItemRequirement;
-                    if (itemRequirement == null) return false;
-                    return itemRequirement.Type == ERequirementType.Item && /*!itemRequirement.Fulfilled &&*/ itemRequirement.TemplateId == item.TemplateId;
-                });
-            }).ToList();
-
-            return areas;
-        }
-
-        public static bool IsNeededForHideoutUpgrades(Item item)
-        {
-            List<AreaData> data = GetApplicableUpgrades(item);
-            return data != null && data.Count > 0;
-        }
-
         public static string ToSentenceCase(this string text)
         {
             string result = text;
@@ -64,6 +44,77 @@ namespace HideoutArchitect
 
             var result = System.Drawing.Color.FromName(inputColor);
             return result.IsKnownColor;
+        }
+
+        public static bool IsValidJson(this string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var obj = JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    //Exception in parsing json
+                    Debug.LogError(jex.Message);
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    Debug.LogError(ex.ToString());
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public class StringEnumCommentConverter : StringEnumConverter
+        {
+            //modification of https://stackoverflow.com/a/65001212
+            private readonly string _comment;
+            public StringEnumCommentConverter(string comment)
+            {
+                _comment = comment;
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                base.WriteJson(writer, value, serializer);
+                writer.WriteComment(_comment); // append comment
+            }
+        }
+
+        public class JsonCommentConverter : JsonConverter
+        {
+            //modification of https://stackoverflow.com/a/65001212
+            private readonly string _comment;
+            public JsonCommentConverter(string comment)
+            {
+                _comment = comment;
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                writer.WriteValue(value);
+                writer.WriteComment(_comment); // append comment
+            }
+
+            public override bool CanConvert(Type objectType) => true;
+            public override bool CanRead => false;
         }
     }
 }

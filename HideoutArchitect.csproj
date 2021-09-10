@@ -53,11 +53,24 @@
       <HintPath>C:\SPTarkov\EscapeFromTarkov_Data\Managed\Comfort.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Sirenix.Serialization">
       <HintPath>C:\SPTarkov\EscapeFromTarkov_Data\Managed\Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,6 +113,7 @@
   <ItemGroup>
     <Compile Include="src\client\HideoutItemViewPanel.cs" />
     <Compile Include="src\client\Main.cs" />
+    <Compile Include="src\client\ModConfiguration.cs" />
     <Compile Include="src\client\ModInformation.cs" />
     <Compile Include="src\client\Patches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +123,7 @@
   <ItemGroup>
     <None Include="HideoutArchitect.pfx" />
     <None Include="package.json" />
+    <None Include="packages.config" />
     <None Include="res\translations.json" />
   </ItemGroup>
   <ItemGroup>
@@ -126,4 +141,11 @@ xcopy "$(ProjectDir)src\server" "%25BuildDir%25\src" /K /D /H /Y /I
 xcopy "$(ProjectDir)res" "%25BuildDir%25\res" /K /D /H /Y /I
 copy "$(ProjectDir)package.json" "%25BuildDir%25\package.json"</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ImportGroup Label=".NET DllExport">
+    <Import Project="../packages/UnmanagedExports.1.2.6/tools/RGiesecke.DllExport.targets" Condition="Exists('../packages/UnmanagedExports.1.2.6/tools/RGiesecke.DllExport.targets')" />
+    <Import Project="../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets" Condition="Exists('../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets')" />
+  </ImportGroup>
 </Project>

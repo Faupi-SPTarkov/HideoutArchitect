@@ -1,7 +1,9 @@
-﻿using Comfort.Common;
+﻿using Aki.Common.Utils;
+using Comfort.Common;
 using EFT.Hideout;
 using EFT.InventoryLogic;
 using HideoutArchitect.Patches;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,37 @@ namespace HideoutArchitect
 {
     public class HideoutArchitect
     {
+
+        private static ModConfiguration _modConfig;
+        public static ModConfiguration ModConfig
+        {
+            private set
+            {
+                _modConfig = value;
+            }
+            get
+            {
+                if (_modConfig == null)
+                    _modConfig = ModConfiguration.Load(ModInfo);
+                return _modConfig;
+            }
+        }
+
+        private static ModInformation _modInfo;
+        public static ModInformation ModInfo
+        {
+            private set
+            {
+                _modInfo = value;
+            }
+            get
+            {
+                if (_modInfo == null)
+                    _modInfo = ModInformation.Load();
+                return _modInfo;
+            }
+        }
+
         private static Transform _gameObjectStorage;
         public static Transform GameObjectStorage
         {
@@ -33,44 +66,74 @@ namespace HideoutArchitect
             }
         }
 
-
-        private static ModInformation _modInfo;
-        public static ModInformation ModInfo
-        {
-            private set
-            {
-                _modInfo = value;
-            }
-            get
-            {
-                if (_modInfo == null)
-                    LoadModInfo();
-                return _modInfo;
-            }
-        }
-
         private static void Main()
         {
+            _ = ModConfig;  // Load the mod config
             _ = Resources.LoadTexture("neededforhideout", Path.Combine(ModInfo.path, "res/icon_neededforhideout_small.png"));
             Patcher.PatchAll();
         }
 
 
-        private static void LoadModInfo()
+        public static List<AreaData> GetApplicableUpgrades(Item item)
         {
-            JObject response = JObject.Parse(Aki.SinglePlayer.Utils.RequestHandler.GetJson($"/HideoutArchitect/GetInfo"));
-            try
+            List<AreaData> areas = Singleton<GClass1282>.Instance.AreaDatas.Where(area =>
             {
-                Assert.IsTrue(response.Value<int>("status") == 0);
-                ModInfo = response["data"].ToObject<ModInformation>();
-            }
-            catch (Exception getModInfoException)
-            {
-                string errMsg = $"[{typeof(HideoutArchitect)}] Package.json couldn't be found! Make sure you've installed the mod on the server as well!";
-                Debug.LogError(errMsg);
-                throw getModInfoException;
-            }
+                bool areaActive = area.Status != EAreaStatus.NotSet && area.Template.Enabled == true;
 
+                List<GClass1309> targetedRequirements;
+                switch (ModConfig.NeededForHideoutDefinition)
+                {
+                    case ENeededDefinition.NextLevel:
+                    case ENeededDefinition.NextLevelReady:
+                        targetedRequirements = area.NextStage.Requirements.Value as List<GClass1309>;
+                        break;
+                    default:
+                        throw new NotImplementedException(Enum.GetName(typeof(ENeededDefinition), ModConfig.NeededForHideoutDefinition));
+                }
+
+                bool areaHasRequirements = targetedRequirements != null && targetedRequirements.Count > 0;
+
+                bool itemFitsRequirements = targetedRequirements.Any(genericRequirement =>
+                {
+                    ItemRequirement itemRequirement = genericRequirement as ItemRequirement;
+                    if (itemRequirement == null) return false;
+                    return itemRequirement.TemplateId == item.TemplateId;
+                });
+
+                bool fitsSpecialFilter = false;
+                switch (ModConfig.NeededForHideoutDefinition)
+                {
+                    case ENeededDefinition.NextLevel:
+                        fitsSpecialFilter = true;   // None, we're only getting the item req
+                        break;
+
+                    case ENeededDefinition.NextLevelReady:
+                        fitsSpecialFilter = targetedRequirements.All(genericRequirement =>  // Check if area requirement is fulfilled
+                            {
+                                if (genericRequirement is AreaRequirement)
+                                {
+                                    return genericRequirement.Fulfilled;    // If area requirements are fulfilled
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+                        );
+                        break;
+                    default:
+                        throw new NotImplementedException(Enum.GetName(typeof(ENeededDefinition), ModConfig.NeededForHideoutDefinition));
+                }
+                return areaActive && areaHasRequirements && itemFitsRequirements && fitsSpecialFilter;
+            }).ToList();
+
+            return areas;
+        }
+
+        public static bool IsNeededForHideoutUpgrades(Item item)
+        {
+            List<AreaData> data = GetApplicableUpgrades(item);
+            return data != null && data.Count > 0;
         }
     }
 }
