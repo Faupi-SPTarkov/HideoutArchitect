@@ -55,12 +55,18 @@ namespace HideoutArchitect.Patches
             private static void PatchPostfix(ref GridItemView __instance, Item item, ItemRotation rotation, GClass1768 inventoryController, IItemOwner itemOwner, [CanBeNull] FilterPanel filterPanel, [CanBeNull] ItemUiContext itemUiContext, GClass2088 insurance, bool isSearched = true)
             {
                 if (hideoutPanels.ContainsKey(__instance)) return;
-                QuestItemViewPanel questIconPanel = typeof(ItemView).GetField("_questsItemViewPanel", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance) as QuestItemViewPanel;
-                HideoutItemViewPanel hideoutIconPanel = GameObject.Instantiate(Resources.GetEditOffsetWindowTemplate(questIconPanel), questIconPanel.transform.parent);
-                hideoutIconPanel.transform.SetAsFirstSibling();
-                hideoutPanels[__instance] = hideoutIconPanel;
+                try
+                {
+                    QuestItemViewPanel questIconPanel = typeof(ItemView).GetField("_questsItemViewPanel", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance) as QuestItemViewPanel;
+                    HideoutItemViewPanel hideoutIconPanel = GameObject.Instantiate(Resources.GetEditOffsetWindowTemplate(questIconPanel), questIconPanel.transform.parent);
+                    hideoutIconPanel.transform.SetAsFirstSibling();
+                    hideoutPanels[__instance] = hideoutIconPanel;
 
-                hideoutIconPanel.gameObject.SetActive(true);
+                    hideoutIconPanel.gameObject.SetActive(true);
+                }
+                catch { 
+                    // Item doesn't have a "quest item" icon panel, so it's probably static
+                }
             }
         }
 
