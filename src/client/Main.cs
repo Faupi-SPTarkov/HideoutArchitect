@@ -1,5 +1,4 @@
-﻿using Aki.Common.Utils;
-using Comfort.Common;
+﻿using Comfort.Common;
 using EFT.Hideout;
 using EFT.InventoryLogic;
 using HideoutArchitect.Patches;
@@ -13,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using GameThing = GClass1314;
+using Requirement = GClass1338;
 
 namespace HideoutArchitect
 {
@@ -76,16 +77,16 @@ namespace HideoutArchitect
 
         public static List<AreaData> GetApplicableUpgrades(Item item)
         {
-            List<AreaData> areas = Singleton<GClass1282>.Instance.AreaDatas.Where(area =>
+            List<AreaData> areas = Singleton<GameThing>.Instance.AreaDatas.Where(area =>
             {
                 bool areaActive = area.Status != EAreaStatus.NotSet && area.Template.Enabled == true;
 
-                List<GClass1309> targetedRequirements;
+                List<Requirement> targetedRequirements;
                 switch (ModConfig.NeededForHideoutDefinition)
                 {
                     case ENeededDefinition.NextLevel:
                     case ENeededDefinition.NextLevelReady:
-                        targetedRequirements = area.NextStage.Requirements.Value as List<GClass1309>;
+                        targetedRequirements = area.NextStage.Requirements.Value as List<Requirement>;
                         break;
                     default:
                         throw new NotImplementedException(Enum.GetName(typeof(ENeededDefinition), ModConfig.NeededForHideoutDefinition));
