@@ -1,4 +1,4 @@
-﻿using Aki.Common.Utils;
+﻿using Aki.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -52,7 +52,7 @@ namespace HideoutArchitect
                 if (!VFS.Exists(path))
                     throw new Exception($"No config on path {path} exists!");
 
-                configJson = VFS.ReadFile(path, null);                    
+                configJson = VFS.ReadTextFile(path);                    
                 ModConfig = JsonConvert.DeserializeObject<ModConfiguration>(configJson);
             }
             catch (Exception configReadingException)
@@ -118,7 +118,7 @@ namespace HideoutArchitect
                     try
                     {
                         Debug.LogError($"[{ModInfo.name}] Writing fixed config...");
-                        VFS.WriteFile(path, completeConfigJson.ToString(), false, Encoding.UTF8);
+                        VFS.WriteTextFile(path, completeConfigJson.ToString(), false);
                     }
                     catch
                     {

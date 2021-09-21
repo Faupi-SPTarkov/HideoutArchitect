@@ -1,4 +1,5 @@
-﻿using Aki.Common.Utils.Patching;
+﻿using Aki.Common;
+using Aki.Reflection.Patching;
 using EFT.InventoryLogic;
 using EFT.UI;
 using EFT.UI.DragAndDrop;
@@ -17,10 +18,28 @@ namespace HideoutArchitect.Patches
     {
         public static void PatchAll()
         {
-            PatcherUtil.Patch<ItemViewPatches.GridItemViewUpdateInfoPatch>();
-            PatcherUtil.Patch<ItemViewPatches.NewGridItemViewPatch>();
-            PatcherUtil.Patch<ItemViewPatches.ItemViewInitPatch>();
+            new PatchManager().RunPatches();
         }
+    }
+
+    public class PatchManager
+    {
+        public PatchManager()
+        {
+            this._patches = new PatchList
+            {
+                new ItemViewPatches.GridItemViewUpdateInfoPatch(),
+                new ItemViewPatches.ItemViewInitPatch(),
+                new ItemViewPatches.NewGridItemViewPatch()
+            };
+        }
+
+        public void RunPatches()
+        {
+            this._patches.EnableAll();
+        }
+
+        private readonly PatchList _patches;
     }
 
     public static class ItemViewPatches
@@ -29,30 +48,28 @@ namespace HideoutArchitect.Patches
 
         public static void SetHideoutItemViewPanel(this ItemView __instance)
         {
-            HideoutItemViewPanel hideoutItemViewPanel;
-            if (!hideoutPanels.TryGetValue(__instance, out hideoutItemViewPanel))
+            if (!hideoutPanels.TryGetValue(__instance, out HideoutItemViewPanel hideoutItemViewPanel))
                 return;
 
-            GClass1768 inventoryController = typeof(ItemView).GetField("InventoryController", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance) as GClass1768;
             ItemUiContext itemUiContext = typeof(ItemView).GetField("ItemUiContext", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance) as ItemUiContext;
 
-            if (hideoutItemViewPanel != null && inventoryController != null)
+            if (hideoutItemViewPanel != null)
             {
-                hideoutItemViewPanel.Show(__instance.Item, __instance, (itemUiContext != null) ? itemUiContext.Tooltip : null);
+                hideoutItemViewPanel.Show(__instance.Item, __instance, itemUiContext?.Tooltip);
                 return;
             }
         }
 
-        public class NewGridItemViewPatch : GenericPatch<NewGridItemViewPatch>
+        public class NewGridItemViewPatch : Patch
         {
-            public NewGridItemViewPatch() : base(null, "PatchPostfix", null, null) { }
+            public NewGridItemViewPatch() : base(typeof(NewGridItemViewPatch), null, null, "PatchPostfix", null, null) { }
 
             protected override MethodBase GetTargetMethod()
             {
                 return typeof(GridItemView).GetMethod("NewGridItemView", BindingFlags.Instance | BindingFlags.NonPublic);
             }
 
-            private static void PatchPostfix(ref GridItemView __instance, Item item, ItemRotation rotation, GClass1768 inventoryController, IItemOwner itemOwner, [CanBeNull] FilterPanel filterPanel, [CanBeNull] ItemUiContext itemUiContext, GClass2088 insurance, bool isSearched = true)
+            private static void PatchPostfix(ref GridItemView __instance, Item item)
             {
                 if (hideoutPanels.ContainsKey(__instance)) return;
                 try
@@ -70,9 +87,9 @@ namespace HideoutArchitect.Patches
             }
         }
 
-        public class ItemViewInitPatch : GenericPatch<ItemViewInitPatch>
+        public class ItemViewInitPatch : Patch
         {
-            public ItemViewInitPatch() : base(null, "PatchPostfix", null, null) { }
+            public ItemViewInitPatch() : base(typeof(ItemViewInitPatch), null, null, "PatchPostfix", null, null) { }
 
             protected override MethodBase GetTargetMethod()
             {
@@ -85,9 +102,9 @@ namespace HideoutArchitect.Patches
             }
         }
 
-        public class GridItemViewUpdateInfoPatch : GenericPatch<GridItemViewUpdateInfoPatch>
+        public class GridItemViewUpdateInfoPatch : Patch
         {
-            public GridItemViewUpdateInfoPatch() : base(null, "PatchPostfix", null, null) { }
+            public GridItemViewUpdateInfoPatch() : base(typeof(GridItemViewUpdateInfoPatch), null, null, "PatchPostfix", null, null) { }
 
             protected override MethodBase GetTargetMethod()
             {
@@ -99,8 +116,7 @@ namespace HideoutArchitect.Patches
                 if (!__instance.IsSearched)
                     return;
 
-                HideoutItemViewPanel hideoutItemViewPanel;
-                if (!hideoutPanels.TryGetValue(__instance, out hideoutItemViewPanel))
+                if (!hideoutPanels.TryGetValue(__instance, out HideoutItemViewPanel hideoutItemViewPanel))
                     return;
                 hideoutItemViewPanel.iconImage.gameObject.SetActive(HideoutArchitect.IsNeededForHideoutUpgrades(__instance.Item));
 

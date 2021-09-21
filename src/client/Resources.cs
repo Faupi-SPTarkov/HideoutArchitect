@@ -10,7 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using Logger = Aki.Common.Utils.Logger;
+using Logger = Aki.Common.Log;
 
 namespace HideoutArchitect
 {
@@ -69,12 +69,12 @@ namespace HideoutArchitect
 
                 if (uwr.responseCode != 200)
                 {
-                    Logger.LogError($"[{HideoutArchitect.ModInfo.name}] Request error {uwr.responseCode}: {uwr.error}");
+                    Logger.Error($"[{HideoutArchitect.ModInfo.name}] Request error {uwr.responseCode}: {uwr.error}");
                 }
                 else
                 {
                     // Get downloaded asset bundle
-                    Logger.LogInfo($"[{HideoutArchitect.ModInfo.name}] Retrieved texture! {id.ToString()} from {path}");
+                    Logger.Info($"[{HideoutArchitect.ModInfo.name}] Retrieved texture! {id.ToString()} from {path}");
                     Texture2D cachedTexture = DownloadHandlerTexture.GetContent(uwr);
                     iconCache.Add(id, Sprite.Create(cachedTexture, new Rect(0, 0, cachedTexture.width, cachedTexture.height), new Vector2(0, 0)));
                 }
