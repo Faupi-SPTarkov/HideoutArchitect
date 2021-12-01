@@ -54,7 +54,7 @@ namespace HideoutArchitect
             hideoutItem.iconImage = typeof(QuestItemViewPanel).GetField("_questIconImage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(questItem) as Image;
             hideoutItem.tooltipLabel = typeof(QuestItemViewPanel).GetField("_questItemLabel", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(questItem) as TextMeshProUGUI;
             hideoutItem.tooltip = typeof(QuestItemViewPanel).GetField("simpleTooltip_0", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(questItem) as SimpleTooltip;
-            hideoutItem.tooltipString = typeof(QuestItemViewPanel).GetField("string_3", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(questItem) as string;
+            hideoutItem.tooltipString = typeof(QuestItemViewPanel).GetField("string_4", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(questItem) as string;
         }
 
 

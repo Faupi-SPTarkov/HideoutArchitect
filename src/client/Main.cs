@@ -12,8 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using GameThing = GClass1314;
-using Requirement = GClass1338;
+using Logger = Aki.Common.Log;
+using Hideout = GClass1537;
+using Requirement = GClass1561;
 
 namespace HideoutArchitect
 {
@@ -77,7 +78,7 @@ namespace HideoutArchitect
 
         public static List<AreaData> GetApplicableUpgrades(Item item)
         {
-            List<AreaData> areas = Singleton<GameThing>.Instance.AreaDatas.Where(area =>
+            List<AreaData> areas = Singleton<Hideout>.Instance.AreaDatas.Where(area =>
             {
                 bool areaActive = area.Status != EAreaStatus.NotSet && area.Template.Enabled == true;
 

@@ -57,46 +57,70 @@
     <Content Include="src\server\hideoutarchitect.js" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Aki-Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Aki-Singleplayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Aki.Build">
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Aki.Build.dll</HintPath>
+    <Reference Include="Aki.Build, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\Aki.Build.dll</HintPath>
     </Reference>
-    <Reference Include="Aki.Common">
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Aki.Common.dll</HintPath>
+    <Reference Include="Aki.Common, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f0bd14c07d9ab659, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\Aki.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Aki.Reflection">
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Aki.Reflection.dll</HintPath>
+    <Reference Include="Aki.Core">
+      <HintPath>..\References\Aki.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Aki.Reflection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f0bd14c07d9ab659, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\Aki.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Aki.Singleplayer">
+      <HintPath>..\References\Aki.Singleplayer.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\References\EFT-Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Comfort, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Comfort, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\Comfort.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\References\EFT-Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Sirenix.Serialization, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sirenix.Serialization, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Sirenix.Serialization.dll</HintPath>
+      <HintPath>..\References\EFT-Managed\Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\References\EFT-Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\SPTarkov\AKI-2.0.0\EscapeFromTarkov_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\References\EFT-Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\EFT-Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

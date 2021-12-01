@@ -54,7 +54,7 @@ namespace HideoutArchitect
 			UpdateTooltip();
 
 			if (HideoutArchitect.IsNeededForHideoutUpgrades(item))
-				base.ShowGameObject(false);
+				base.ShowGameObject();
 		}
 
 		public void UpdateTooltip()
