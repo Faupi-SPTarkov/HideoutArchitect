@@ -10,7 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using Logger = Aki.Common.Log;
+using Logger = Aki.Common.Utils.Log;
 
 namespace HideoutArchitect
 {

@@ -65,15 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\EFT-Managed\Aki.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Aki.Core">
-      <HintPath>..\References\Aki.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Aki.Reflection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f0bd14c07d9ab659, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\EFT-Managed\Aki.Reflection.dll</HintPath>
-    </Reference>
-    <Reference Include="Aki.Singleplayer">
-      <HintPath>..\References\Aki.Singleplayer.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

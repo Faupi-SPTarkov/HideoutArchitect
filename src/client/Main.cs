@@ -12,9 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Logger = Aki.Common.Log;
-using Hideout = GClass1537;
-using Requirement = GClass1561;
+using Logger = Aki.Common.Utils.Log;
+using Hideout = GClass1599;
+using Requirement = GClass1623;
 
 namespace HideoutArchitect
 {
