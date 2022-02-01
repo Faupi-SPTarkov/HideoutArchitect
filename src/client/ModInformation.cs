@@ -22,7 +22,7 @@ namespace HideoutArchitect
         {
             ModInformation ModInfo;
 
-            JObject response = JObject.Parse(Aki.SinglePlayer.Utils.RequestHandler.GetJson($"/HideoutArchitect/GetInfo"));
+            JObject response = JObject.Parse(Aki.Common.Http.RequestHandler.GetJson($"/HideoutArchitect/GetInfo"));
             try
             {
                 Assert.IsTrue(response.Value<int>("status") == 0);
